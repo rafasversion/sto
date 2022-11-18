@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <link href="/css/novotreino.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+  <input type="checkbox" id="nav-toggle">
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <img class="logo" src="/img/logo_2.png"></h2>
+    </div>
+
+    <div class="sidebar-menu">
+      <ul>
+        <li>
+          <a href="/dashboard" class="active"><span class="las la-users"></span>
+            <span> Gerenciar Alunos</span></a>
+        </li>
+        <li>
+          <a href="/dashboard/ferramentas" class="order" id="fer"><span class="las la-igloo"></span>
+            <span> Ferramentas</span></a>
+        </li>
+        <li>
+          <a href="/" class="order"><span class="las la-igloo"></span>
+            <span> Notificações</span></a>
+        </li>
+        <li>
+          <a href="/logoutadm" class="order" style="color: red; opacity: 100%"><span
+              class="las la-arrow-alt-circle-left"></span>
+            <span> Sair</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <header>
+      <h2>
+        <label for="nav-toggle">
+          <span class="las la-bars"></span>
+        </label>
+        Dashboard
+      </h2>
+
+      <div class="search-wrapper">
+        <span class="las la-search"></span>
+        <input type="search" placeholder="Procure aqui">
+      </div>
+
+      <div class="user-wrapper">
+        <img src="/img/user.png" width="30px" height="30px" alt="">
+        <div>
+          <h4>Dani<br>Teixeira</h4>
+          <small>Dona</small>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="options">
+        <div class="back"><a href="/dashboard/aluno/<%= user.id_aluno%>"><span class="las la-arrow-left"></span></a>
+          Enviar novo treino</div>
+
+        <div class="buttons">
+          <button class="cancelar">Cancelar</button>
+        </div>
+
+      </div>
+
+      <div class="principal-aluno">
+
+        <div class="card-principal">
+
+          <form class="enviartreino" id="form">
+
+            <div class="titulo-dados">
+              <h3>Novo Treino</h3>
+            </div>
+
+
+
+            <div class="form-item" style="display: none;">
+              <input type="text" id="id_aluno" value="<%= user.id_aluno%>">
+            </div>
+            <div class="group_1" style="display: flex; flex-direction:row;">
+              <div class="form-item" style="width: 30%;">
+                <label for="tipo_treino">Tipo de treino:</label>
+                <select id="tipo_treino">
+                  <option selected value="" disabled>Selecione...</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+
+              <div class="form-item" style="width: 30%;">
+                <label for="nivel_treino">Nível do treino:</label>
+                <input type="text" id="nivel_treino" placeholder="Coloque o nível">
+              </div>
+
+              <!-- <div class="form-item" style="width: 30%;">
+              <label for="data_fim_treino">Data de encerramento:</label>
+                <input type="date" id="data_fim_treino">
+              
+            </div> -->
+
+
+
+              <div class="form-item" style="width: 30%;">
+                <label for="nome_treino">Título/Nome do treino:</label>
+                <input type="text" id="nome_treino" placeholder="Coloque um titulo">
+              </div>
+            </div>
+
+            <div class="group_1" style="display: flex; flex-direction:row;">
+              <div class="form-item" style="width: 30%;">
+                <label for="descricao_treino">Descrição:</label>
+                <textarea id="descricao_treino"></textarea>
+              </div>
+
+              <div class="form-item" style="width: 30%;">
+                <label for="objetivo_treino">Objetivo:</label>
+                <input type="text" id="objetivo_treino" placeholder="Coloque o objetivo do treino">
+              </div>
+
+              <div class="form-item" style="width: 30%;">
+                <label for="dias_treino">Dias da semana:</label>
+                <input type="text" id="dias_treino" placeholder="Coloque os dias">
+              </div>
+
+              
+
+            </div>
+
+            <div class="group_1" style="display: flex; flex-direction:row;">
+            <div class="form-item" style="width: 30%;">
+              <label for="observacao_treino">Observação:</label>
+              <input type="text" id="observacao_treino" placeholder="Adicione uma observação">
+            </div>
+
+            <div class="form-item" style="width: 30%;">
+              <label for="duracao_treino">Período:</label>
+              <input type="text" id="duracao_treino" placeholder="Coloque o período">
+            </div>
+            
+            <div class="form-item" style="width: 30%;">
+              <label for="frequencia_treino">Frequência:</label>
+              <input type="text" id="frequencia_treino" placeholder="Frequência em que devem ser realizados">
+            </div>
+            
+            </div>
+
+            <div class="titulo-dados" style="margin-bottom: .5rem; margin-top: .5rem;">
+              <h3>Tabela de exercícios</h3>
+            </div>
+            <div class="group" id="exercicios" style="display: flex;flex-direction:column; gap: 1rem;">
+            
+              <div class="group_item">
+              <div class="group_1" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio1_treino">Exercício:</label>
+                  <input type="text" id="exercicio1_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos1_treino">Recursos:</label>
+                  <input type="text" id="recursos1_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes1_treino">Séries:</label>
+                  <input type="text" id="sessoes1_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes1_treino">Repetições:</label>
+                  <input type="text" id="repeticoes1_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+                
+
+              </div>
+
+              <div class="group_1.2" id="group_1" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo1_treino">Intervalo:</label>
+                  <input type="text" id="intervalo1_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao1_treino">Observação:</label>
+                  <input type="text" id="observacao1_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video1_treino">Link do vídeo:</label>
+                  <input type="text" id="video1_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+
+                <button class="mais_exercicio" id="btn_exer1" type="button"><span class="las la-plus"></span>Adicionar
+                  exercício</button>
+                </div>
+              </div>
+              <!-- grupo dois -->
+              <div class="group_item" id="group_2" style="display: none; flex-direction:column;">
+              <div class="group_2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio2_treino">Exercício:</label>
+                  <input type="text" id="exercicio2_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos1_treino">Recursos:</label>
+                  <input type="text" id="recursos2_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes2_treino">Séries:</label>
+                  <input type="text" id="sessoes2_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes2_treino">Repetições:</label>
+                  <input type="text" id="repeticoes2_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_2.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo2_treino">Intervalo:</label>
+                  <input type="text" id="intervalo2_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao2_treino">Observação:</label>
+                  <input type="text" id="observacao2_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video2_treino">Link do vídeo:</label>
+                  <input type="text" id="video2_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer2" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+                </div>
+
+              <!-- grupo tres -->
+              
+              <div class="group_item" id="group_3" style="display: none; flex-direction:column;">
+              <div class="group_3" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio3_treino">Exercício:</label>
+                  <input type="text" id="exercicio3_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos3_treino">Recursos:</label>
+                  <input type="text" id="recursos3_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes3_treino">Séries:</label>
+                  <input type="text" id="sessoes3_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes3_treino">Repetições:</label>
+                  <input type="text" id="repeticoes3_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_3.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo3_treino">Intervalo:</label>
+                  <input type="text" id="intervalo3_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao3_treino">Observação:</label>
+                  <input type="text" id="observacao3_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video3_treino">Link do vídeo:</label>
+                  <input type="text" id="video3_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer3" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+
+              <!-- grupo quatro -->
+              <div class="group_item" id="group_4" style="display: none; flex-direction:column;">
+              <div class="group_4" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio4_treino">Exercício:</label>
+                  <input type="text" id="exercicio4_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos4_treino">Recursos:</label>
+                  <input type="text" id="recursos4_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes4_treino">Séries:</label>
+                  <input type="text" id="sessoes4_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes4_treino">Repetições:</label>
+                  <input type="text" id="repeticoes4_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_4.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo4_treino">Intervalo:</label>
+                  <input type="text" id="intervalo4_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao4_treino">Observação:</label>
+                  <input type="text" id="observacao4_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video4_treino">Link do vídeo:</label>
+                  <input type="text" id="video4_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer4" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo cinco -->
+              <div class="group_item" id="group_5" style="display: none; flex-direction:column;">
+              <div class="group_5" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio5_treino">Exercício:</label>
+                  <input type="text" id="exercicio5_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos5_treino">Recursos:</label>
+                  <input type="text" id="recursos5_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes5_treino">Séries:</label>
+                  <input type="text" id="sessoes5_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes5_treino">Repetições:</label>
+                  <input type="text" id="repeticoes5_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_5.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo5_treino">Intervalo:</label>
+                  <input type="text" id="intervalo5_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao5_treino">Observação:</label>
+                  <input type="text" id="observacao5_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video5_treino">Link do vídeo:</label>
+                  <input type="text" id="video5_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer5" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo seis  -->
+              <div class="group_item" id="group_6" style="display: none; flex-direction:column;">
+              <div class="group_6" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio6_treino">Exercício:</label>
+                  <input type="text" id="exercicio6_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos6_treino">Recursos:</label>
+                  <input type="text" id="recursos6_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes6_treino">Séries:</label>
+                  <input type="text" id="sessoes6_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes6_treino">Repetições:</label>
+                  <input type="text" id="repeticoes6_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_6.2" style="display: flex; flex-direction: row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo6_treino">Intervalo:</label>
+                  <input type="text" id="intervalo6_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao6_treino">Observação:</label>
+                  <input type="text" id="observacao6_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video6_treino">Link do vídeo:</label>
+                  <input type="text" id="video6_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer6" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo sete -->
+              <div class="group_item" id="group_7" style="display: none; flex-direction:column;">
+              <div class="group_7" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio7_treino">Exercício:</label>
+                  <input type="text" id="exercicio7_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos7_treino">Recursos:</label>
+                  <input type="text" id="recursos7_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes7_treino">Séries:</label>
+                  <input type="text" id="sessoes7_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes7_treino">Repetições:</label>
+                  <input type="text" id="repeticoes7_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_7.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo7_treino">Intervalo:</label>
+                  <input type="text" id="intervalo7_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao7_treino">Observação:</label>
+                  <input type="text" id="observacao7_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video7_treino">Link do vídeo:</label>
+                  <input type="text" id="video7_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer7" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo oito -->
+              <div class="group_item" id="group_8" style="display: none; flex-direction:column;">
+              <div class="group_8" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio7_treino">Exercício:</label>
+                  <input type="text" id="exercicio8_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos8_treino">Recursos:</label>
+                  <input type="text" id="recursos8_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes8_treino">Séries:</label>
+                  <input type="text" id="sessoes8_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes8_treino">Repetições:</label>
+                  <input type="text" id="repeticoes8_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_8.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo8_treino">Intervalo:</label>
+                  <input type="text" id="intervalo8_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao8_treino">Observação:</label>
+                  <input type="text" id="observacao8_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video8_treino">Link do vídeo:</label>
+                  <input type="text" id="video8_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer8" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo nove -->
+              <div class="group_item" id="group_19" style="display: none; flex-direction:column;">
+              <div class="group_9" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio9_treino">Exercício:</label>
+                  <input type="text" id="exercicio9_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos9_treino">Recursos:</label>
+                  <input type="text" id="recursos9_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes9_treino">Séries:</label>
+                  <input type="text" id="sessoes9_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes9_treino">Repetições:</label>
+                  <input type="text" id="repeticoes9_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_9.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo9_treino">Intervalo:</label>
+                  <input type="text" id="intervalo9_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao9_treino">Observação:</label>
+                  <input type="text" id="observacao9_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video9_treino">Link do vídeo:</label>
+                  <input type="text" id="video9_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+                <button class="mais_exercicio" id="btn_exer9" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo dez -->
+              <div class="group_item"  id="group_10" style="display: none; flex-direction:column;">
+              <div class="group_10" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio10_treino">Exercício:</label>
+                  <input type="text" id="exercicio10_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos10_treino">Recursos:</label>
+                  <input type="text" id="recursos10_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes10_treino">Séries:</label>
+                  <input type="text" id="sessoes10_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes10_treino">Repetições:</label>
+                  <input type="text" id="repeticoes10_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_10.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo10_treino">Intervalo:</label>
+                  <input type="text" id="intervalo10_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao10_treino">Observação:</label>
+                  <input type="text" id="observacao10_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video10_treino">Link do vídeo:</label>
+                  <input type="text" id="video10_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+
+                <button class="mais_exercicio" id="btn_exer10" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo 11 -->
+              <div class="group_item"  id="group_11" style="display: none; flex-direction:column;">
+              <div class="group_11" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio11_treino">Exercício:</label>
+                  <input type="text" id="exercicio11_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos11_treino">Recursos:</label>
+                  <input type="text" id="recursos11_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes11_treino">Séries:</label>
+                  <input type="text" id="sessoes11_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes11_treino">Repetições:</label>
+                  <input type="text" id="repeticoes11_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+              </div>
+
+              <div class="group_11.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo11_treino">Intervalo:</label>
+                  <input type="text" id="intervalo11_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao11_treino">Observação:</label>
+                  <input type="text" id="observacao11_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video11_treino">Link do vídeo:</label>
+                  <input type="text" id="video11_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+
+                <button class="mais_exercicio" id="btn_exer11" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+                </div>
+              </div>
+              <!-- grupo 12 -->
+              <div class="group_item" id="group_12" style="display: none; flex-direction:column;">
+              <div class="group_12" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="exercicio12_treino">Exercício:</label>
+                  <input type="text" id="exercicio12_treino" placeholder="Coloque o nome do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="recursos12_treino">Recursos:</label>
+                  <input type="text" id="recursos12_treino" placeholder="Coloque os recursos do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="sessoes12_treino">Séries:</label>
+                  <input type="text" id="sessoes12_treino" placeholder="Coloque as séries do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="repeticoes12_treino">Repetições:</label>
+                  <input type="text" id="repeticoes12_treino" placeholder="Coloque as repetições do exercício">
+                </div>
+
+                <button class="mais_exercicio" id="btn_exer11" type="button" style="display: none;"><span
+                  class="las la-plus"></span>Adicionar exercício</button>
+              </div>
+
+              <div class="group_12.2" style="display: flex; flex-direction:row; gap: 1rem;">
+                <div class="form-item" style="width: 30%;">
+                  <label for="intervalo12_treino">Intervalo:</label>
+                  <input type="text" id="intervalo12_treino" placeholder="Coloque o intervalo do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="observacao12_treino">Observação:</label>
+                  <input type="text" id="observacao12_treino" placeholder="Coloque uma observação do exercício">
+                </div>
+
+                <div class="form-item" style="width: 30%;">
+                  <label for="video12_treino">Link do vídeo:</label>
+                  <input type="text" id="video12_treino" placeholder="Coloque o vídeo do exercício">
+                </div>
+
+         </div>
+
+            </div>
+
+            <!-- grupo de botoes -->
+            
+
+
+            <!-- mensagens de status -->
+
+            <div class="mensagem-erro" id="error" style="display: none;"></div>
+            <div class="mensagem-sucesso" id="success" style="display: none;"></div>
+
+            
+            <button type="submit" class="enviar">Enviar</button>
+
+          </form>
+        </div>
+
+        <% if(anamnese) {%>
+          <div class="anamnese">
+            <h3 class="titulo-dados-anamese">Anamnese:</h3>
+
+            <div class="colunas-anamnese">
+
+              <div class="coluna-um">
+                <p class="dados-gerais-anamnese">Profissão: <%= anamnese.profissao%>
+                </p>
+                <p class="dados-gerais-anamnese">Naturalidade: <%= anamnese.naturalidade%>
+                </p>
+                <p class="dados-gerais-anamnese">Contato de emergência: <%= anamnese.contato_emergencia%>
+                </p>
+              </div>
+
+              <div class="coluna-dois">
+                <p class="dados-gerais-anamnese">Altura: <%= anamnese.altura %>
+                </p>
+                <p class="dados-gerais-anamnese">Peso: <%= anamnese.peso%>
+                </p>
+                <p class="dados-gerais-anamnese">Tipo sanguíneo: <%= anamnese.tipo_sanguineo%>
+                </p>
+              </div>
+
+              <div class="coluna-tres">
+                <p class="dados-gerais-anamnese">Suplementos alimentares: <%= anamnese.uso_suplementar_alimentar%>
+                </p>
+                <p class="dados-gerais-anamnese">Medicamentos: <%= anamnese.medicamento%>
+                </p>
+                <p class="dados-gerais-anamnese">Patologia: <%= anamnese.patologia%>
+                </p>
+              </div>
+
+              <div class="coluna-tres">
+                <p class="dados-gerais-anamnese">Horas de sono: <%= anamnese.horas_sono%>
+                </p>
+                <p class="dados-gerais-anamnese">Período mestrual: <%= anamnese.período_menstrual%>
+                </p>
+              </div>
+
+
+              <div class="coluna-tres">
+                <p class="dados-gerais-anamnese">Frequência de Exercícios: <%= anamnese.historico_exercicio_frequencia%>
+                </p>
+                <p class="dados-gerais-anamnese">Tempo de exercícios: <%= anamnese.historico_exercicio_tempo%>
+                </p>
+                <p class="dados-gerais-anamnese">Frequência cardíaca: <%= anamnese.frequencia_cardiaca_repouso%>
+                </p>
+              </div>
+
+              <div class="coluna-tres">
+                <p class="dados-gerais-anamnese">Objetivo do aluno: <%= anamnese.horas_sono%>
+                </p>
+              </div>
+
+            </div>
+          </div>
+          <% } else if(!anamnese){ %>
+
+            <% } %>
+    </main>
+  </div>
+
+  <script src="/js/novotreino.js"></script>
+
+</body>
+
+</html>

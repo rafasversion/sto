@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+  <link href="/css/dashboard.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <img class="logo" src="/img/logo_2.png"></h2>
+  </div>
+
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="/dashboard" class="active"><span class="las la-users"></span>
+        <span> Gerenciar Alunos</span></a>
+    </li>
+       <li>
+        <a href="/dashboard/ferramentas" class="order"><span class="las la-tools"></span>
+        <span> Ferramentas</span></a>
+    </li>
+       <li>
+        <a href="/" class="order"><span class="las la-bell"></span>
+        <span> Notificações</span></a>
+    </li>
+    <li>
+      <a href="/logoutadm" class="order" style="color: red; opacity: 100%"><span class="las la-arrow-alt-circle-left"></span>
+      <span> Sair</span></a>
+    </li>
+    </ul>
+  </div>
+</div>
+
+  <div class="main-content">
+    <header>
+     <h2>
+        <label for="nav-toggle">
+          <span class="las la-bars"></span>
+        </label>
+        Dashboard
+     </h2>
+
+      <div class="search-wrapper">
+        <span class="las la-search"></span>
+        <input type="search" placeholder="Procure aqui">
+      </div>
+
+      <div class="user-wrapper">
+        <img src="img/user.png" width="30px" height="30px" alt="">
+        <div>
+          <h4>Dani<br>Teixeira</h4>
+          <small>Dona</small>
+        </div>
+      </div>
+      
+    </header>
+
+    <main>
+      <div class="cards">
+        
+        <div class="card-single" id="card1">
+          <div>
+             <span class="card-title">Treinos completos</span>
+          </div>
+          <div>
+              <h1 class="card-dado"><%= [status] %></h1>
+          </div>
+        </div>
+    
+
+        <div class="card-single" id="card2">
+          <div>
+
+           
+             <span class="card-title">Alunos cadastrados</span>
+             
+          </div>
+          <div>
+            <% rows.forEach(user => { %>
+              <h1 class="card-dado"><%= user.id_count %></h1>
+            </div>
+          </div>
+  <% }) %> 
+
+        <div class="card-single" id="card3">
+          <div>
+             
+             <span class="card-title">Treinos agendados</span>
+          </div>
+          <div>
+            
+            <h1 class="card-dado"><%= treino.id_treinocount%></h1>
+          </div>
+        </div>
+
+           <div class="card-single" id="card4">
+          <div>
+             
+             <span class="card-title">Postagens criadas</span>
+          </div>
+          <div>
+            <% results.forEach(post => { %>
+            <h1 class="card-dado"><%= post.id_postcount %> </h1>
+            <% }) %> 
+          </div>
+        </div>
+      </div>
+
+      <div class="recent-grid">
+
+        <div class="treinos">
+          <div class="card">
+            <div class="card-header">
+              <h3>Treinos</h3>
+              <button>Adicionar treino <span class="las la-plus">
+               </span></button>
+            </div>
+
+            <div class="card-body">
+              <table width="100%">
+                <thead>
+                  <tr>
+                    <td>Nome</td>
+                    <td>Descrição</td>
+                    <td>Aluno</td>
+                    <td>Status</td>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <% resultes.forEach(treino => { %>
+                  <tr>
+                    <td><%= treino.nome_treino%></td>
+                    <td><%= treino.descricao_treino%></td>
+                    <td><%= treino.nome_aluno%></td>
+                    <td>
+                      <span class="status <%= treino.status_treino%> "></span>
+                      <%= treino.status_treino%>
+                    </td>
+                  </tr>
+                   <% }) %> 
+                 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <% rows.forEach(users => { %>
+
+          <% let count = users.id_count %>
+          <% if(count == 0) {%> 
+
+            <div class="alunos">
+              <div class="card">
+                <div class="card-header">
+                  <h3>Alunos</h3>
+                </div>
+    
+                <div class="card-body">
+                  <div class="aluno">
+                    <div>
+                    <h4>Nenhum aluno cadastrado ainda</h4>
+                    <small><%= user.email_aluno %></small>
+                  </div>
+                </div>
+              </div>
+            <% } else { %> 
+        <div class="alunos">
+          <div class="card">
+            <div class="card-header">
+              <h3>Alunos</h3>
+            </div>
+
+
+            <div class="card-body">
+              <% result.forEach(user => { %>
+
+                 
+
+              <div class="aluno">
+                <div class="info">
+                <img src="img/user.png" width="40px" height="40px;" alt="">
+                <div>
+
+                  
+                 
+                <h4><%= user.nome_aluno%> <%= user.sobrenome_aluno %></h4>
+                <small><%= user.email_aluno %></small>
+              </div>
+            </div>
+               
+            <div class="view">
+              <a href="/dashboard/aluno/<%= user.id_aluno %>"><button class="veraluno">Ver<span class="las la-user-circle"></span></button></a>
+            </div>
+          </div>
+
+          <% }) %> 
+
+          <% } %> 
+          <% }) %> 
+                
+         </div>
+            
+        </div>
+      </div>
+    </div>
+
+      
+      
+    </main>
+  </div>
+  
+  
+</body>
+
+</html>
